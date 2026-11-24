@@ -6,7 +6,7 @@ native structured JSON parsing, token accounting, and explicit error translation
 
 import json
 import time
-from typing import Any, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Optional, Type, TypeVar
 from pydantic import BaseModel
 import openai
 from openai import AsyncOpenAI

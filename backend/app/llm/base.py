@@ -4,14 +4,14 @@ Abstract base class specifying required methods for all provider adapters.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Optional, Type, TypeVar
 from pydantic import BaseModel
 
 from app.llm.usage import LLMHealthStatus, LLMMessage, LLMResponse
 
 T = TypeVar("T", bound=BaseModel)
 
-
+from typing import Any, Dict, List, Optional
 class BaseLLMProvider(ABC):
     """Abstract interface defining required methods for all LLM implementations."""
 

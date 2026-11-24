@@ -7,7 +7,7 @@ without requiring cloud API keys.
 import json
 import time
 import uuid
-from typing import Any, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Optional, Type, TypeVar
 import httpx
 from pydantic import BaseModel
 

@@ -10,7 +10,8 @@ from typing import AsyncGenerator
 
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
+from pathlib import Path
 
 from app.api.router import api_router
 from app.config import settings
@@ -103,7 +104,12 @@ async def global_exception_handler(request: Request, exc: Exception) -> JSONResp
     summary="API Root Information",
     status_code=status.HTTP_200_OK,
 )
-async def root():
+async def root(request: Request):
+    if "text/html" in request.headers.get("accept", ""):
+        ui_path = Path(__file__).parent / "static" / "index.html"
+        if ui_path.exists():
+            return HTMLResponse(content=ui_path.read_text(encoding="utf-8"))
+
     return {
         "service": settings.APP_NAME,
         "version": settings.APP_VERSION,
@@ -111,6 +117,15 @@ async def root():
         "documentation": "/docs",
         "health": f"{settings.API_V1_PREFIX}/health",
     }
+
+
+@app.get("/ui", include_in_schema=False)
+async def tripmate_ui():
+    """Serve the local browser interface."""
+    ui_path = Path(__file__).parent / "static" / "index.html"
+    if not ui_path.exists():
+        return JSONResponse(status_code=404, content={"detail": "Web UI not found"})
+    return HTMLResponse(content=ui_path.read_text(encoding="utf-8"))
 
 
 # Mount versioned API routes

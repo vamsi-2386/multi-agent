@@ -3,10 +3,13 @@ TripMate AI - Approval and Checkpoint Service
 Coordinates execution, human review interrupts, state inspection, and resumption.
 """
 
-from typing import Any, Dict, Optional
+from __future__ import annotations
+from typing import TYPE_CHECKING, Any, Dict, Optional
 import uuid
 
-from app.graph.state import TripState
+if TYPE_CHECKING:
+    from app.graph.state import TripState
+
 from app.graph.workflow import trip_graph_with_approval
 from app.schemas.approval import ApprovalStatusResponse
 from app.schemas.trip import TripRequest, TripResponse
